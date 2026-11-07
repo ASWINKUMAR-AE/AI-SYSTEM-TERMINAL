@@ -114,18 +114,19 @@ def load_config() -> Dict[str, Any]:
         except Exception:
             pass
 
-    # Environment variables override config file
-    if os.environ.get("VIREONIX_API_URL"):
-        cfg["api_url"] = os.environ["VIREONIX_API_URL"]
-    if os.environ.get("VIREONIX_MODEL"):
-        cfg["model"] = os.environ["VIREONIX_MODEL"]
-    if os.environ.get("VIREONIX_API_KEY"):
-        cfg["api_key"] = os.environ["VIREONIX_API_KEY"]
-    if os.environ.get("VIREONIX_TIMEOUT"):
-        try:
-            cfg["timeout"] = int(os.environ["VIREONIX_TIMEOUT"])
-        except ValueError:
-            pass
+    # Environment variables override config file (ZETHUB or VIREONIX)
+    for env_prefix in ("ZETHUB", "VIREONIX"):
+        if os.environ.get(f"{env_prefix}_API_URL"):
+            cfg["api_url"] = os.environ[f"{env_prefix}_API_URL"]
+        if os.environ.get(f"{env_prefix}_MODEL"):
+            cfg["model"] = os.environ[f"{env_prefix}_MODEL"]
+        if os.environ.get(f"{env_prefix}_API_KEY"):
+            cfg["api_key"] = os.environ[f"{env_prefix}_API_KEY"]
+        if os.environ.get(f"{env_prefix}_TIMEOUT"):
+            try:
+                cfg["timeout"] = int(os.environ[f"{env_prefix}_TIMEOUT"])
+            except ValueError:
+                pass
 
     return cfg
 

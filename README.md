@@ -1,7 +1,7 @@
 # AI System Terminal & Autonomous Error Fixer
-### Powered by Vireonix AI
+### Powered by ZETHUB AI
 
-A production-grade, globally accessible AI-powered system terminal manager and autonomous debugger integrated directly into Windows PowerShell and CMD. It understands natural-language requests, executes controlled commands, analyzes stack traces, generates targeted patches, applies safe fixes with rollback checkpoints, and verifies application stability.
+A production-grade, globally accessible AI-powered system terminal manager and autonomous debugger for the ZETHUB product ecosystem, integrated directly into Windows PowerShell and CMD. It understands natural-language requests, executes controlled commands, analyzes stack traces, generates targeted patches, applies safe fixes with rollback checkpoints, and verifies application stability.
 
 ---
 
@@ -10,7 +10,7 @@ A production-grade, globally accessible AI-powered system terminal manager and a
 ```text
 ai-terminal/
 ├── main.py                # Main CLI entrypoint, argument router, Rich UI & REPL
-├── ai_client.py           # Vireonix AI API client, exponential backoff retries, JSON parser
+├── ai_client.py           # ZETHUB AI API client, exponential backoff retries, JSON parser
 ├── command_router.py      # Natural language intent classifier & pipeline dispatcher
 ├── terminal_executor.py   # Controlled PowerShell & CMD subprocess execution & history logging
 ├── environment_scanner.py # Discovers runtimes (Python, Java, Node, PHP), ports & tools
@@ -24,6 +24,7 @@ ai-terminal/
 ├── config.py              # User settings, persistent configuration, paths
 ├── requirements.txt       # Dependencies (requests, rich, psutil, prompt_toolkit)
 ├── install.ps1            # Windows PowerShell one-click installer
+├── install.cmd            # Windows CMD one-click installer
 ├── uninstall.ps1          # Uninstaller
 └── README.md              # Documentation & user manual
 ```
@@ -96,7 +97,7 @@ ai auto "Fix this project and run it"
 2. **[CHECK]**: Inspects runtimes, dependencies, and port availability.
 3. **[RUN]**: Attempts to launch or build the application.
 4. **[ERROR]**: If startup fails, extracts stack traces and logs.
-5. **[AI]**: Queries Vireonix AI with ground-truth error context to determine the root cause.
+5. **[AI]**: Queries ZETHUB AI with ground-truth error context to determine the root cause.
 6. **[FIX]**: Creates a backup snapshot in `.ai-terminal/backups/<timestamp>`, installs missing dependencies, frees conflicting ports, or applies targeted code patches.
 7. **[TEST]**: Runs verification checks (process liveness, port binding, HTTP health check, log audit).
 8. **Status: VERIFIED**: Only reported if all checks pass successfully.
@@ -153,10 +154,10 @@ Stored in `$HOME\.ai-terminal\config.json`:
 ```
 
 ### Environment Variable Overrides:
-- `VIREONIX_API_URL`: Custom API endpoint
-- `VIREONIX_MODEL`: Target model (default: `auto`)
-- `VIREONIX_API_KEY`: Optional Bearer authentication token
-- `VIREONIX_TIMEOUT`: Timeout in seconds (default: `60`)
+- `ZETHUB_API_URL` / `VIREONIX_API_URL`: Custom API endpoint
+- `ZETHUB_MODEL` / `VIREONIX_MODEL`: Target model (default: `auto`)
+- `ZETHUB_API_KEY` / `VIREONIX_API_KEY`: Optional Bearer authentication token
+- `ZETHUB_TIMEOUT` / `VIREONIX_TIMEOUT`: Timeout in seconds (default: `60`)
 
 ---
 

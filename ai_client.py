@@ -1,6 +1,6 @@
 """
-Vireonix AI Client for AI System Terminal
-Handles communication with the Vireonix AI API, conversation persistence,
+ZETHUB AI Client for AI System Terminal
+Handles communication with the ZETHUB AI API, conversation persistence,
 exponential backoff retries, JSON parsing, and specialized diagnosis prompts.
 """
 
@@ -17,7 +17,7 @@ from config import get_history_path, load_config
 
 
 class VireonixClient:
-    """Robust client for the Vireonix AI chat completions API."""
+    """Robust client for the ZETHUB AI chat completions API."""
 
     def __init__(self, api_url: Optional[str] = None, model: Optional[str] = None, api_key: Optional[str] = None):
         self.config = load_config()
@@ -39,7 +39,7 @@ class VireonixClient:
         return headers
 
     def test_connection(self) -> Tuple[bool, str]:
-        """Tests connectivity with the Vireonix AI API using retries."""
+        """Tests connectivity with the ZETHUB AI API using retries."""
         payload = {
             "model": self.model,
             "messages": [{"role": "user", "content": "ping"}]
@@ -82,7 +82,7 @@ class VireonixClient:
         temperature: float = 0.2,
         max_retries: Optional[int] = None
     ) -> str:
-        """Sends a full list of messages to Vireonix AI with exponential backoff retries."""
+        """Sends a full list of messages to ZETHUB AI with exponential backoff retries."""
         retries = max_retries if max_retries is not None else self.max_retries
         payload = {
             "model": self.model,
@@ -118,7 +118,7 @@ class VireonixClient:
                         continue
 
                 # Unrecoverable 4xx error
-                raise RuntimeError(f"Vireonix AI API error {resp.status_code}: {resp.text}")
+                raise RuntimeError(f"ZETHUB AI API error {resp.status_code}: {resp.text}")
 
             except (requests.Timeout, requests.ConnectionError) as conn_err:
                 last_error = f"Network error ({conn_err.__class__.__name__}): {conn_err}"
@@ -128,10 +128,10 @@ class VireonixClient:
                     continue
                 break
             except Exception as e:
-                raise RuntimeError(f"Failed to communicate with Vireonix AI API: {e}")
+                raise RuntimeError(f"Failed to communicate with ZETHUB AI API: {e}")
 
         raise RuntimeError(
-            f"Vireonix AI API request failed after {retries} attempts. Last error: {last_error}"
+            f"ZETHUB AI API request failed after {retries} attempts. Last error: {last_error}"
         )
 
     def chat(
@@ -172,7 +172,7 @@ class VireonixClient:
         project_context: Dict[str, Any],
         system_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Asks Vireonix AI to diagnose an error and return a structured JSON diagnosis."""
+        """Asks ZETHUB AI to diagnose an error and return a structured JSON diagnosis."""
         system_prompt = (
             "You are a master software debugger and DevOps agent. "
             "Analyze the given error log, project context, and system environment. "
@@ -218,7 +218,7 @@ class VireonixClient:
         error_context: str,
         fix_description: str
     ) -> str:
-        """Asks Vireonix AI to fix a specific source or configuration file."""
+        """Asks ZETHUB AI to fix a specific source or configuration file."""
         system_prompt = (
             "You are an automated software repair engine. Your job is to output the corrected version of the file. "
             "Output ONLY the complete, corrected file contents inside a single code block. "
@@ -313,3 +313,7 @@ class VireonixClient:
                 hist_path.unlink()
             except Exception:
                 pass
+
+
+# Alias for ZETHUB branding
+ZethubClient = VireonixClient

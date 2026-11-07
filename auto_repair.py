@@ -222,7 +222,7 @@ class AutoRepairEngine:
                         self.create_backup_checkpoint([target_file])
                         # 2. Read existing content
                         original_text = target_file.read_text(encoding="utf-8", errors="replace")
-                        # 3. Ask Vireonix AI for targeted file fix
+                        # 3. Ask ZETHUB AI for targeted file fix
                         self.log_step("AI", f"Generating code patch for {target_file.name}...")
                         corrected_text = self.ai.generate_file_fix(
                             file_path=str(target_file.relative_to(self.workspace)),
@@ -308,7 +308,7 @@ class AutoRepairEngine:
                 return verif
 
             # STEP 2 — Diagnose
-            self.log_step("AI", "Analyzing error with Vireonix AI...")
+            self.log_step("AI", "Analyzing error with ZETHUB AI...")
             diagnosis = self.analyzer.analyze(error_text, project_info)
 
             # STEP 3 — Repair

@@ -1,7 +1,7 @@
 """
 Error Analyzer for AI System Terminal
 Extracts stack traces, identifies failure categories, correlates with project files,
-and queries Vireonix AI for root cause analysis and targeted fixes.
+and queries ZETHUB AI for root cause analysis and targeted fixes.
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ class ErrorDiagnosis:
 
 
 class ErrorAnalyzer:
-    """Analyzes runtime and compilation errors using local heuristics and Vireonix AI."""
+    """Analyzes runtime and compilation errors using local heuristics and ZETHUB AI."""
 
     def __init__(self, ai_client: Optional[VireonixClient] = None):
         self.ai = ai_client or VireonixClient()
@@ -57,7 +57,7 @@ class ErrorAnalyzer:
             "heuristic_details": local_details
         }
 
-        # Query Vireonix AI
+        # Query ZETHUB AI
         try:
             ai_diag = self.ai.diagnose_error(
                 error_log=error_text,
