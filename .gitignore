@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local test & virtual environments
+.test_env/
+test_env/
+.venv/
+venv/
+env/
+
+# Logs & backups
+*.log
+.ai-terminal/
+
+# Secrets
+.env
+.env.*
