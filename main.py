@@ -1,6 +1,6 @@
 """
 Main CLI Entrypoint for AI System Terminal
-Provides rich terminal UX, command parsing, interactive REPL, and ZETHUB AI integration.
+Provides rich terminal UX, command parsing, interactive REPL, and Vireonix AI integration.
 """
 
 from __future__ import annotations
@@ -28,10 +28,9 @@ console = Console()
 
 
 def print_banner(project_name: Optional[str] = None) -> None:
-    """Prints the official AI System Terminal header banner."""
+    """Prints the official ZetHub header banner."""
     header = (
-        "[bold cyan]AI SYSTEM TERMINAL[/bold cyan]\n"
-        "[dim]Powered by ZETHUB AI[/dim]\n\n"
+        "[bold cyan]ZETHUB[/bold cyan] [dim]│ Powered by zethub[/dim]\n\n"
         f"[bold white]Project:[/bold white] [green]{project_name or 'Detecting...'}[/green]\n"
         f"[bold white]Environment:[/bold white] [yellow]Windows / PowerShell[/yellow]"
     )
@@ -135,7 +134,7 @@ def run_repl() -> None:
                 continue
 
             if user_input.lower() in ("exit", "quit", "q"):
-                console.print("[yellow]Exiting AI System Terminal.[/yellow]")
+                console.print("[yellow]Exiting ZetHub.[/yellow]")
                 break
 
             if user_input.lower() == "clear":
@@ -156,12 +155,13 @@ def run_repl() -> None:
                 mode_to_use = "auto"
                 prompt = user_input[5:].strip()
 
-            result = router.handle_request(
-                prompt=prompt,
-                mode=mode_to_use,
-                confirm_callback=interactive_confirm,
-                progress_callback=progress_logger
-            )
+            with console.status("[cyan]Processing with  AI...[/cyan]", spinner="dots"):
+                result = router.handle_request(
+                    prompt=prompt,
+                    mode=mode_to_use,
+                    confirm_callback=interactive_confirm,
+                    progress_callback=progress_logger
+                )
 
             # Display response
             if "response" in result and result["response"]:
@@ -184,7 +184,7 @@ def run_repl() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="AI System Terminal - Powered by ZETHUB AI",
+        description="ZetHub - Autonomous AI System Terminal (Powered by Vireonix AI)",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
 
@@ -194,7 +194,7 @@ def main() -> None:
     parser.add_argument("--inspect", action="store_true", help="Inspect current workspace project")
     parser.add_argument("--rollback", action="store_true", help="Restore previous file backup checkpoint")
     parser.add_argument("--clear-history", action="store_true", help="Clear conversation history")
-    parser.add_argument("--test-api", action="store_true", help="Test connectivity to ZETHUB AI API")
+    parser.add_argument("--test-api", action="store_true", help="Test connectivity to Vireonix AI API")
 
     args = parser.parse_args()
     config = load_config()
@@ -207,7 +207,7 @@ def main() -> None:
 
     # 1. Test API flag
     if args.test_api:
-        console.print("[cyan]Testing ZETHUB AI API connection...[/cyan]")
+        console.print("[cyan]Testing Vireonix AI API connection...[/cyan]")
         ok, msg = ai_client.test_connection()
         if ok:
             console.print(f"[green]SUCCESS:[/green] {msg}")
@@ -288,13 +288,17 @@ def main() -> None:
     proj = detector.detect()
     print_banner(proj.project_type)
 
-    with console.status("[cyan]Processing with ZETHUB AI...[/cyan]", spinner="dots"):
-        result = router.handle_request(
-            prompt=query_str,
-            mode=mode,
-            confirm_callback=interactive_confirm,
-            progress_callback=progress_logger
-        )
+    try:
+        with console.status("[cyan]Processing with  AI...[/cyan]", spinner="dots"):
+            result = router.handle_request(
+                prompt=query_str,
+                mode=mode,
+                confirm_callback=interactive_confirm,
+                progress_callback=progress_logger
+            )
+    except Exception as e:
+        console.print(f"\n[bold red]AI Service Notice:[/bold red] {e}")
+        return
 
     # Render results
     if "response" in result and result["response"]:

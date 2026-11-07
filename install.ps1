@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "   AI SYSTEM TERMINAL INSTALLER - Powered by ZETHUB AI   " -ForegroundColor Cyan
+Write-Host "   ZETHUB - AI SYSTEM TERMINAL INSTALLER (Powered by Vireonix)   " -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -179,7 +179,7 @@ if (-not (Test-Path $ConfigPath)) {
 }
 
 # 7. Verify API Connectivity
-Write-Host "`n[7/9] Verifying ZETHUB AI API connectivity..." -ForegroundColor Yellow
+Write-Host "`n[7/9] Verifying Vireonix AI API connectivity..." -ForegroundColor Yellow
 try {
     $apiTest = & $SelectedPython "$MainPy" --test-api 2>&1
     Write-Host "  $apiTest" -ForegroundColor Cyan
